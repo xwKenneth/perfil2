@@ -1,0 +1,82 @@
+Table Cargo {
+  cargo_id int [pk]
+  nombre_cargo varchar(100) [not null]
+}
+
+Table Empleado {
+  empleado_id int [pk]
+  nombre_empleado varchar(100) [not null]
+  apellido_empleado varchar(100) [not null]
+  telefono_empleado varchar(15) [not null]
+  correo_electronico_empleado varchar(100) [not null]
+  direccion_empleado varchar(255) [not null]
+  salario_empleado decimal(10, 2) [not null]
+  contrasena_empleado varchar(255) [not null]
+  cargo_id int [ref: > Cargo.cargo_id]
+}
+
+Table Cliente {
+  cliente_id int [pk]
+  nombre_cliente varchar(100) [not null]
+  apellido_cliente varchar(100) [not null]
+  telefono_cliente varchar(15) [not null]
+  correo_electronico_cliente varchar(100) [not null]
+  direccion_cliente varchar(255) [not null]
+  contrasena_cliente varchar(255) [not null]
+}
+
+Table Proveedor {
+  proveedor_id int [pk]
+  nombre_proveedor varchar(100) [not null]
+  telefono_proveedor varchar(15) [not null]
+  direccion_proveedor varchar(255) [not null]
+}
+
+Table Marcas {
+  marca_id int [pk]
+  nombre_marca varchar(100) [not null]
+  foto_marca varchar(255) [not null]
+}
+
+Table Categoria {
+  categoria_id int [pk]
+  nombre_categoria varchar(100) [not null]
+  foto_categoria varchar(255) [not null]
+}
+
+Table Producto {
+  producto_id int [pk]
+  nombre_producto varchar(100) [not null]
+  descripcion_producto text
+  precio_producto decimal(10, 2) [not null]
+  foto_producto varchar(255) [not null]
+  proveedor_id int [ref: > Proveedor.proveedor_id]
+  marca_id int [ref: > Marcas.marca_id]
+  categoria_id int [ref: > Categoria.categoria_id]
+  existencias_producto int [not null]
+}
+
+Table Ventas {
+  venta_id int [pk]
+  fecha_venta date [not null]
+  total_venta decimal(10, 2) [not null]
+  cliente_id int [ref: > Cliente.cliente_id]
+}
+
+Table Valoracion {
+  valoracion_id int [pk]
+  producto_id int [ref: > Producto.producto_id]
+  cliente_id int [ref: > Cliente.cliente_id]
+  calificacion_valoracion decimal(3, 1) [not null]
+  comentario_valoracion text
+  fecha_valoracion date [not null]
+}
+
+Table Detalle_Ventas {
+  detalle_venta_id int [pk]
+  venta_id int [ref: > Ventas.venta_id]
+  producto_id int [ref: > Producto.producto_id]
+  cantidad_detalle int [not null]
+  precio_unitario_detalle decimal(10, 2) [not null]
+  valoracion_id int [ref: > Valoracion.valoracion_id]
+}
